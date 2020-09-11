@@ -1,10 +1,9 @@
-const list = document.querySelector('#results');
-
-const insertMovies = (json) => {
-  json.Search.forEach((result) => {
+const insertMovies = (data) => {
+  const list = document.querySelector('#results');
+  data.Search.forEach((result) => {
     const movie = `
     <li>
-      <img src="${result.Poster}" alt="" />
+      <img class='movie-poster' src="${result.Poster}" alt="" />
       <p>${result.Title}</p>
     </li>`;
     list.insertAdjacentHTML('beforeend', movie);
@@ -17,11 +16,12 @@ const fetchMovies = (query) => {
     .then(insertMovies);
 };
 
-const updateResultsList = (event) => {
+const callTheAPI = (event) => {
+  const list = document.querySelector('#results');
   event.preventDefault();
   list.innerHTML = '';
   const input = document.querySelector('#search-input');
   fetchMovies(input.value);
 }
 
-export { fetchMovies, updateResultsList }
+export { fetchMovies, callTheAPI };

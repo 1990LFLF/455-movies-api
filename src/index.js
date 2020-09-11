@@ -1,28 +1,14 @@
-const list = document.querySelector('#results');
+import { fetchMovies, callTheAPI } from './movies';
+import { initSortable } from './plugins/init_sortable';
 
-const insertMovies = (data) => {
-  data.Search.forEach((result) => {
-    const movie = `<li>
-      <img src="${result.Poster}" alt="" />
-      <p>${result.Title}</p>
-    </li>`;
-    list.insertAdjacentHTML('beforeend', movie);
-  });
-};
+// No arquivo de entrada (entry file), a gente faz apenas esses 3 comportamentos
 
-const fetchMovies = (query) => {
-  fetch(`http://www.omdbapi.com/?s=${query}&apikey=adf1f2d7`)
-    .then(response => response.json())
-    .then(insertMovies);
-};
-
-
+// Seleciona elementos
 const form = document.querySelector('#search-form');
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  list.innerHTML = '';
-  const input = document.querySelector('#search-input');
-  fetchMovies(input.value);
-});
 
+// Adiciona event listeners
+form.addEventListener('submit', callTheAPI);
+
+// Chama funções que a gente precisa que rodem na primeira vez que a página carrega;
 fetchMovies('mad max'); // on 1st page load
+initSortable();
